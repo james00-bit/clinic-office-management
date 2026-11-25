@@ -1,0 +1,24 @@
+package com.example.clinic.service;
+
+import com.example.clinic.model.Patient;
+import com.example.clinic.repository.PatientRepository;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class PatientService {
+    private final PatientRepository repository;
+
+    public PatientService(PatientRepository repository) { this.repository = repository; }
+
+    public List<Patient> findAll() { return repository.findAll(); }
+
+    public Patient findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found: " + id));
+    }
+
+    public Patient save(Patient patient) { return repository.save(patient); }
+
+    public void delete(Long id) { repository.deleteById(id); }
+}
